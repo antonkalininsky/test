@@ -1,6 +1,6 @@
 <script setup>
 import TableRow from '../components/TableRow.vue'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 
 // VARS
 const data = ref([
@@ -39,7 +39,18 @@ const data = ref([
   {
     title: 'Актау',
     value: 5,
-    children: []
+    children: [
+      {
+        title: 'Отдел 1',
+        value: 15,
+        children: []
+      },
+      {
+        title: 'Отдел 2',
+        value: 15,
+        children: []
+      }
+    ]
   }
 ])
 </script>
@@ -55,12 +66,15 @@ const data = ref([
       </div>
       <TableRow :data="data" :depth="0" />
     </div>
+    <button class="button my-a" style="display: block">
+      <mdicon name="plus-thick" width="20" height="20" />
+    </button>
   </div>
 </template>
 
 <style scoped>
 .main {
-  width: 70vw;
+  width: 80vw;
   margin-inline: auto;
 }
 

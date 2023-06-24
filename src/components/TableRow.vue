@@ -1,18 +1,22 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, watch } from 'vue'
 
 // VARS
-const showChildren = ref(false)
+const showChildren = ref([])
 
 // PROPS
 const props = defineProps(['data', 'depth'])
 
-// COMP
-const totalValue = computed(() => {
-  console.log('TEST')
-  console.log(calcChildrenValue(props.data))
-  return calcChildrenValue(props.data)
-})
+// WATCH
+watch(
+  () => props.data,
+  () => {
+    showChildren.value = new Array(props.data.length).fill(false)
+  },
+  {
+    immediate: true
+  }
+)
 
 // FUNS
 function calcOpacity(depth) {
@@ -26,27 +30,57 @@ function calcChildrenValue(data) {
   if (data.children.length === 0) return data.value
   return data.value + data.children.reduce((accum, curr) => accum + calcChildrenValue(curr), 0)
 }
+
+function updateItem() {
+  // todo
+}
+
+function deleteItem() {
+  // todo
+}
+
+function addSubItem() {
+  // todo
+}
 </script>
 <template>
   <div>
-    <div v-for="item in props.data" :key="item.title">
-      <div class="grid-row">
+    <div v-for="(item, index) in props.data" :key="item.title">
+      <div class="grid-row pointer" @click.stop="showChildren[index] = !showChildren[index]">
         <div class="cell">
-          <button @click="showChildren = !showChildren" v-if="item.children.length > 0" class="button">
-            <span v-show="showChildren"><mdicon name="chevron-down" width="20" height="20" /></span>
-            <span v-show="!showChildren"><mdicon name="chevron-right" width="20" height="20" /></span>
+          <button
+            @click.stop="showChildren[index] = !showChildren[index]"
+            v-if="item.children.length > 0"
+            class="button"
+          >
+            <span v-show="showChildren[index]">
+              <mdicon name="chevron-down" width="20" height="20" />
+            </span>
+            <span v-show="!showChildren[index]">
+              <mdicon name="chevron-right" width="20" height="20" />
+            </span>
           </button>
           {{ item.title }}
         </div>
         <div class="cell">{{ calcChildrenValue(item) }}</div>
         <div class="cell">{{ item.value }}</div>
-        <div class="cell">CRUD</div>
+        <div class="cell">
+          <button class="button" @click.stop="updateItem()">
+            <mdicon name="pencil" width="20" height="20" />
+          </button>
+          <button class="button" @click.stop="deleteItem()">
+            <mdicon name="close-thick" width="20" height="20" />
+          </button>
+          <button class="button" @click.stop="addSubItem()">
+            <mdicon name="plus-thick" width="20" height="20" />
+          </button>
+        </div>
       </div>
       <Transition name="children-open">
         <TableRow
           :data="item.children"
           :depth="props.depth + 1"
-          v-show="showChildren"
+          v-show="showChildren[index]"
           class="children"
           :style="{
             'background-color': `rgba(135, 159, 255, ${calcOpacity(props.depth + 1)})`
