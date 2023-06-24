@@ -46,17 +46,15 @@ const data = ref([
 
 <template>
   <div class="main">
-    <table class="table">
-      <thead class="table__header">
-        <th class=""></th>
-        <th>Общее количество</th>
-        <th>Фактическое количество</th>
-        <th>Действия</th>
-      </thead>
-      <tbody>
-        <TableRow :data="data" />
-      </tbody>
-    </table>
+    <div class="table">
+      <div class="grid-row table__header">
+        <div class="cell"></div>
+        <div class="cell">Общее количество</div>
+        <div class="cell">Фактическое количество</div>
+        <div class="cell">Действия</div>
+      </div>
+      <TableRow :data="data" :depth="0" />
+    </div>
   </div>
 </template>
 
@@ -81,9 +79,5 @@ const data = ref([
 
 .table__header th {
   text-align: start;
-}
-
-.table__header th:nth-child(1) {
-  width: 40%;
 }
 </style>

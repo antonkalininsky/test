@@ -1,0 +1,21 @@
+.grid-row {
+  display: grid;
+  grid-template-columns: 40% 25% 25% auto;
+}
+
+.cell {
+    padding: 10px 20px;
+    text-align: start;
+}
+
+.button {
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.button:hover {
+    background-color: rgba(128, 128, 128, 0.522);
+    border-radius: 1000px;
+}
