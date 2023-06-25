@@ -46,6 +46,7 @@ const modal = ref()
 }
 
 .main {
+    min-width: 880px;
     width: 80vw;
     margin-inline: auto;
 }
