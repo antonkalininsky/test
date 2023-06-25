@@ -19,9 +19,13 @@ function handleOutsideClick(event) {
 defineExpose({ triggerModal })
 </script>
 <template>
-    <div class="modal" v-show="showModal" @click.stop="handleOutsideClick($event)">
-        <div class="modal__content">test</div>
-    </div>
+    <Transition name="modal-bg">
+        <div class="modal" v-show="showModal" @click.stop="handleOutsideClick($event)">
+            <Transition name="modal-open">
+                <div class="modal__content" v-show="showModal">test</div>
+            </Transition>
+        </div>
+    </Transition>
 </template>
 <style scoped>
 .modal {
@@ -41,5 +45,23 @@ defineExpose({ triggerModal })
     padding: 20px;
     border: 1px solid #888;
     width: 600px;
+}
+
+.modal-open-enter-active,
+.modal-open-leave-active,
+.modal-bg-enter-active,
+.modal-bg-leave-active {
+    transition: all 0.2s linear;
+}
+
+.modal-bg-enter-from,
+.modal-bg-leave-to {
+    opacity: 0;
+}
+
+.modal-open-enter-from,
+.modal-open-leave-to {
+    transform: translateY(-20px);
+    opacity: 0;
 }
 </style>
