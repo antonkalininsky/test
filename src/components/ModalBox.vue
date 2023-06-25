@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import ModalAddInterface from './ModalAddInterface.vue'
 
 // VARS
 const showModal = ref(false)
@@ -22,7 +23,9 @@ defineExpose({ triggerModal })
     <Transition name="modal-bg">
         <div class="modal" v-show="showModal" @click.stop="handleOutsideClick($event)">
             <Transition name="modal-open">
-                <div class="modal__content" v-show="showModal">test</div>
+                <div class="modal__content" v-show="showModal">
+                    <ModalAddInterface @close-me="showModal = false" />
+                </div>
             </Transition>
         </div>
     </Transition>
@@ -44,7 +47,7 @@ defineExpose({ triggerModal })
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 600px;
+    width: 500px;
 }
 
 .modal-open-enter-active,
