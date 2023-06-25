@@ -66,7 +66,6 @@ export const useMainStore = defineStore('main', () => {
 
     // FUNS
     function addNewItemToData(parentId = null, title, value) {
-        console.log(parentId)
         if (parentId === null) {
             data.value.push({
                 id: count.value,
