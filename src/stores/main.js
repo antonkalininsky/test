@@ -1,8 +1,9 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useMainStore = defineStore('main', () => {
-    const count = ref(0)
+    // VARS
+    const count = ref(9)
     const data = ref([
         {
             id: 0,
@@ -63,5 +64,59 @@ export const useMainStore = defineStore('main', () => {
         }
     ])
 
-    return { data }
+    // FUNS
+    function addNewItem(parentId = null, title, value) {
+        if (parentId === null) {
+            data.value.push({
+                id: count.value,
+                title,
+                value,
+                children: []
+            })
+            count.value++
+            return
+        }
+        data.value
+            .find((item) => item.id === parentId)
+            .children.push({
+                id: count.value,
+                title,
+                value,
+                children: []
+            })
+        count.value++
+    }
+
+    function deleteItem(data, id) {
+        for (let item of data) {
+            if (item.id === id) {
+                data.splice(data.indexOf(item), 1)
+                return
+            }
+            if (item.children.length) {
+                deleteItem(item.children, id)
+            }
+        }
+    }
+
+    function deleteItemFromData(id) {
+        deleteItem(data.value, id)
+    }
+
+    function getItem(data, id) {
+        for (let item of data) {
+            if (item.id === id) {
+                return item
+            }
+            if (item.children.length) {
+                return getItem(item.children, id)
+            }
+        }
+    }
+
+    function getItemFromData(id) {
+        return getItem(data.value, id)
+    }
+
+    return { data, addNewItem, deleteItemFromData, getItemFromData }
 })

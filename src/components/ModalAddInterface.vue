@@ -1,9 +1,14 @@
 <script setup>
 import { ref } from 'vue'
+import { useMainStore } from '../stores/main'
+
+// STORE
+const mainStore = useMainStore()
 
 // VARS
 const name = ref('')
 const value = ref('')
+const errorMsg = ref(false)
 
 // EMITS
 const emits = defineEmits(['closeMe'])
@@ -16,6 +21,18 @@ function isNumber(event) {
         if (event.preventDefault) event.preventDefault()
     }
 }
+
+function addNewItem() {
+    if (name.value === '' || value.value === '') {
+        errorMsg.value = true
+        return
+    }
+    errorMsg.value = false
+    mainStore.addNewItem(null, name.value, value.value)
+    name.value = ''
+    value.value = ''
+    emits('closeMe')
+}
 </script>
 <template>
     <div class="interface">
@@ -24,15 +41,19 @@ function isNumber(event) {
             <div>
                 <div>Название</div>
                 <input class="input" type="text" v-model="name" />
+                <div v-show="errorMsg" class="error-msg">Заполните оба поля</div>
             </div>
             <div>
-                <div>Колличество</div>
+                <div>Количество</div>
                 <input class="input" type="text" @keypress="isNumber($event)" v-model="value" />
+                <div v-show="errorMsg" class="error-msg">Заполните оба поля</div>
             </div>
         </div>
         <div class="interface__control">
-            <button class="modal-button">Добавить</button>
-            <button @click.stop="emits('closeMe')" class="modal-button modal-button--red">Отмена</button>
+            <button class="modal-button" @click.stop="addNewItem()">Добавить</button>
+            <button @click.stop="emits('closeMe')" class="modal-button modal-button--red">
+                Отмена
+            </button>
         </div>
     </div>
 </template>
@@ -87,5 +108,10 @@ function isNumber(event) {
 
 .modal-button--red:hover {
     background-color: rgb(165, 28, 28);
+}
+
+.error-msg {
+    font-size: 12px;
+    color: red;
 }
 </style>

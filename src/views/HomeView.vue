@@ -1,15 +1,21 @@
 <script setup>
+import ModalBox from '../components/ModalBox.vue'
 import TableRow from '../components/TableRow.vue'
 import { useMainStore } from '../stores/main'
 import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 
 // STORE
 const mainStore = useMainStore()
 const { data } = storeToRefs(mainStore)
+
+// VARS
+const modal = ref()
 </script>
 
 <template>
     <div class="main">
+        <ModalBox ref="modal" />
         <div class="table">
             <div class="grid-row table__header">
                 <div class="cell"></div>
@@ -19,7 +25,7 @@ const { data } = storeToRefs(mainStore)
             </div>
             <TableRow :data="data" :depth="0" />
         </div>
-        <button class="button my-a" style="display: block">
+        <button class="button my-a" style="display: block" @click.stop="modal.triggerModal()">
             <mdicon name="plus-thick" width="20" height="20" />
         </button>
     </div>
