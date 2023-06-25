@@ -52,7 +52,7 @@ function addSubItem(id) {
         <ModalBox ref="modal" />
         <div v-for="(item, index) in props.data" :key="item.id">
             <div class="grid-row pointer table-row" @click.stop="showChildren[index] = !showChildren[index]">
-                <div class="cell">
+                <div class="cell width-compensate">
                     <button
                         @click.stop="showChildren[index] = !showChildren[index]"
                         v-if="item.children.length > 0"
@@ -65,6 +65,7 @@ function addSubItem(id) {
                             <mdicon name="chevron-right" width="20" height="20" />
                         </span>
                     </button>
+                    <span class="spacer" v-else></span>
                     {{ item.title }}
                 </div>
                 <div class="cell">{{ calcChildrenValue(item) }}</div>
@@ -106,6 +107,15 @@ function addSubItem(id) {
 
 .children {
     padding-left: 20px;
+}
+
+.spacer {
+    display: inline-block;
+    width: 30px;
+}
+
+.width-compensate {
+    width: calc(100% - 20px);
 }
 
 .children-open-enter-active,

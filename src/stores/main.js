@@ -66,7 +66,7 @@ export const useMainStore = defineStore('main', () => {
 
     // FUNS
     function addNewItemToData(parentId = null, title, value) {
-        console.log(parentId);
+        console.log(parentId)
         if (parentId === null) {
             data.value.push({
                 id: count.value,
@@ -92,9 +92,7 @@ export const useMainStore = defineStore('main', () => {
                 count.value++
                 return
             }
-            if (item.children.length) {
-                addNewItem(item.children, parentId, title, value)
-            }
+            addNewItem(item.children, parentId, title, value)
         }
     }
 
@@ -104,9 +102,7 @@ export const useMainStore = defineStore('main', () => {
                 data.splice(data.indexOf(item), 1)
                 return
             }
-            if (item.children.length) {
-                deleteItem(item.children, id)
-            }
+            deleteItem(item.children, id)
         }
     }
 
@@ -116,13 +112,13 @@ export const useMainStore = defineStore('main', () => {
 
     function getItem(data, id) {
         for (let item of data) {
-            if (item.id === id) {
+            if (item.id == id) {
                 return item
             }
-            if (item.children.length) {
-                return getItem(item.children, id)
-            }
+            const buf = getItem(item.children, id)
+            if (buf !== false) return buf
         }
+        return false
     }
 
     function getItemFromData(id) {
