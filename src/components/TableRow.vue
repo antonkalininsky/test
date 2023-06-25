@@ -51,9 +51,14 @@ function addSubItem(id) {
         <div v-for="(item, index) in props.data" :key="item.id">
             <div
                 class="grid-row pointer table-row"
+                :style="{
+                    'grid-template-columns': `calc(40% - ${12 * props.depth}px) calc(25% + ${
+                        5 * props.depth
+                    }px) calc(20% + ${4 * props.depth}px) auto`
+                }"
                 @click.stop="showChildren[index] = !showChildren[index]"
             >
-                <div class="cell width-compensate">
+                <div class="cell">
                     <button
                         @click.stop="showChildren[index] = !showChildren[index]"
                         v-if="item.children.length > 0"
@@ -100,6 +105,7 @@ function addSubItem(id) {
 <style scoped>
 .table-row {
     border-bottom: 1px solid rgb(207, 207, 207);
+    cursor: pointer;
 }
 
 .table-row:hover {
@@ -113,10 +119,6 @@ function addSubItem(id) {
 .spacer {
     display: inline-block;
     width: 30px;
-}
-
-.width-compensate {
-    width: calc(100% - 20px);
 }
 
 .children-open-enter-active,

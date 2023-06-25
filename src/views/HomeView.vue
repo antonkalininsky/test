@@ -27,8 +27,7 @@ const modal = ref()
             <div v-show="data.length === 0" class="empty-msg">Данные не найдены</div>
         </div>
         <button
-            class="button my-a"
-            style="display: block"
+            class="button button-new"
             @click.stop="modal.triggerModal('add', null)"
         >
             <mdicon name="plus-thick" width="20" height="20" />
@@ -37,6 +36,10 @@ const modal = ref()
 </template>
 
 <style scoped>
+.button-new {
+    display: block;
+    margin-inline: auto;
+}
 .empty-msg {
     font-weight: 600;
     margin-inline: auto;
