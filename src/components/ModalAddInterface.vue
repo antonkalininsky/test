@@ -5,13 +5,16 @@ import { useMainStore } from '../stores/main'
 // STORE
 const mainStore = useMainStore()
 
+// EMITS
+const emits = defineEmits(['closeMe'])
+
+// PROPS
+const props = defineProps(['id'])
+
 // VARS
 const name = ref('')
 const value = ref('')
 const errorMsg = ref(false)
-
-// EMITS
-const emits = defineEmits(['closeMe'])
 
 // FUNS
 function isNumber(event) {
@@ -28,7 +31,7 @@ function addNewItem() {
         return
     }
     errorMsg.value = false
-    mainStore.addNewItem(null, name.value, value.value)
+    mainStore.addNewItemToData(props.id, name.value, Number(value.value))
     name.value = ''
     value.value = ''
     emits('closeMe')

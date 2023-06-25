@@ -4,9 +4,13 @@ import ModalAddInterface from './ModalAddInterface.vue'
 
 // VARS
 const showModal = ref(false)
+const mode = ref('')
+const id = ref(null)
 
 // FUNS
-function triggerModal() {
+function triggerModal(shownMode = '', shownId = null) {
+    mode.value = shownMode
+    id.value = shownId
     showModal.value = true
 }
 
@@ -24,7 +28,7 @@ defineExpose({ triggerModal })
         <div class="modal" v-show="showModal" @click.stop="handleOutsideClick($event)">
             <Transition name="modal-open">
                 <div class="modal__content" v-show="showModal">
-                    <ModalAddInterface @close-me="showModal = false" />
+                    <ModalAddInterface @close-me="showModal = false" :id="id" />
                 </div>
             </Transition>
         </div>

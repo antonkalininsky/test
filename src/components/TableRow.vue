@@ -43,9 +43,8 @@ function deleteItem() {
     // todo
 }
 
-function addSubItem() {
-    modal.value.triggerModal()
-    // todo
+function addSubItem(id) {
+    modal.value.triggerModal('add', id)
 }
 </script>
 <template>
@@ -77,7 +76,7 @@ function addSubItem() {
                     <button class="button" @click.stop="deleteItem()">
                         <mdicon name="close-thick" width="20" height="20" />
                     </button>
-                    <button class="button" @click.stop="addSubItem()">
+                    <button class="button" @click.stop="addSubItem(item.id)">
                         <mdicon name="plus-thick" width="20" height="20" />
                     </button>
                 </div>

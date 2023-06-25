@@ -25,7 +25,7 @@ const modal = ref()
             </div>
             <TableRow :data="data" :depth="0" />
         </div>
-        <button class="button my-a" style="display: block" @click.stop="modal.triggerModal()">
+        <button class="button my-a" style="display: block" @click.stop="modal.triggerModal('add', null)">
             <mdicon name="plus-thick" width="20" height="20" />
         </button>
     </div>
