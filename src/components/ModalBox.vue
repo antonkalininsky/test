@@ -8,7 +8,7 @@ import ModalUpdateInterface from './ModalUpdateInterface.vue'
 const interfaces = {
     add: ModalAddInterface,
     delete: ModalDeleteInterface,
-    update: ModalDeleteInterface
+    update: ModalUpdateInterface
 }
 
 // VARS

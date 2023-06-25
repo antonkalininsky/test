@@ -47,20 +47,7 @@ export const useMainStore = defineStore('main', () => {
             id: 6,
             title: 'Актау',
             value: 5,
-            children: [
-                {
-                    id: 7,
-                    title: 'Отдел 1',
-                    value: 15,
-                    children: []
-                },
-                {
-                    id: 8,
-                    title: 'Отдел 2',
-                    value: 15,
-                    children: []
-                }
-            ]
+            children: []
         }
     ])
 
@@ -124,5 +111,14 @@ export const useMainStore = defineStore('main', () => {
         return getItem(data.value, id)
     }
 
-    return { data, addNewItemToData, deleteItemFromData, getItemFromData }
+    function updateItem(id, title, value) {
+        const item = getItemFromData(id)
+        item.title = title
+        item.value = value
+    }
+
+    return { data, addNewItemToData, deleteItemFromData, getItemFromData, updateItem }
+},
+{
+    persist: true
 })

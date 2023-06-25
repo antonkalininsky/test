@@ -33,14 +33,12 @@ function calcChildrenValue(data) {
     return data.value + data.children.reduce((accum, curr) => accum + calcChildrenValue(curr), 0)
 }
 
-function updateItem() {
-    // modal.value.triggerModal()
-    // todo
+function updateItem(id) {
+    modal.value.triggerModal('update', id)
 }
 
 function deleteItem(id) {
     modal.value.triggerModal('delete', id)
-    // todo
 }
 
 function addSubItem(id) {
@@ -51,7 +49,10 @@ function addSubItem(id) {
     <div>
         <ModalBox ref="modal" />
         <div v-for="(item, index) in props.data" :key="item.id">
-            <div class="grid-row pointer table-row" @click.stop="showChildren[index] = !showChildren[index]">
+            <div
+                class="grid-row pointer table-row"
+                @click.stop="showChildren[index] = !showChildren[index]"
+            >
                 <div class="cell width-compensate">
                     <button
                         @click.stop="showChildren[index] = !showChildren[index]"
@@ -71,7 +72,7 @@ function addSubItem(id) {
                 <div class="cell">{{ calcChildrenValue(item) }}</div>
                 <div class="cell">{{ item.value }}</div>
                 <div class="cell">
-                    <button class="button" @click.stop="updateItem()">
+                    <button class="button" @click.stop="updateItem(item.id)">
                         <mdicon name="pencil" width="20" height="20" />
                     </button>
                     <button class="button" @click.stop="deleteItem(item.id)">
