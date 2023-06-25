@@ -1,8 +1,10 @@
 <script setup>
+import ModalBox from './ModalBox.vue'
 import { ref, watch } from 'vue'
 
 // VARS
 const showChildren = ref([])
+const modal = ref()
 
 // PROPS
 const props = defineProps(['data', 'depth'])
@@ -32,19 +34,23 @@ function calcChildrenValue(data) {
 }
 
 function updateItem() {
+    modal.value.triggerModal()
     // todo
 }
 
 function deleteItem() {
+    modal.value.triggerModal()
     // todo
 }
 
 function addSubItem() {
+    modal.value.triggerModal()
     // todo
 }
 </script>
 <template>
     <div>
+        <ModalBox ref="modal" />
         <div v-for="(item, index) in props.data" :key="item.id">
             <div class="grid-row pointer" @click.stop="showChildren[index] = !showChildren[index]">
                 <div class="cell">
