@@ -1,6 +1,15 @@
 <script setup>
 import { ref } from 'vue'
 import ModalAddInterface from './ModalAddInterface.vue'
+import ModalDeleteInterface from './ModalDeleteInterface.vue'
+import ModalUpdateInterface from './ModalUpdateInterface.vue'
+
+// CONST
+const interfaces = {
+    add: ModalAddInterface,
+    delete: ModalDeleteInterface,
+    update: ModalDeleteInterface
+}
 
 // VARS
 const showModal = ref(false)
@@ -28,7 +37,7 @@ defineExpose({ triggerModal })
         <div class="modal" v-show="showModal" @click.stop="handleOutsideClick($event)">
             <Transition name="modal-open">
                 <div class="modal__content" v-show="showModal">
-                    <ModalAddInterface @close-me="showModal = false" :id="id" />
+                    <component :is="interfaces[mode]" @close-me="showModal = false" :id="id" />
                 </div>
             </Transition>
         </div>

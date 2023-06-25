@@ -34,12 +34,12 @@ function calcChildrenValue(data) {
 }
 
 function updateItem() {
-    modal.value.triggerModal()
+    // modal.value.triggerModal()
     // todo
 }
 
-function deleteItem() {
-    modal.value.triggerModal()
+function deleteItem(id) {
+    modal.value.triggerModal('delete', id)
     // todo
 }
 
@@ -51,7 +51,7 @@ function addSubItem(id) {
     <div>
         <ModalBox ref="modal" />
         <div v-for="(item, index) in props.data" :key="item.id">
-            <div class="grid-row pointer" @click.stop="showChildren[index] = !showChildren[index]">
+            <div class="grid-row pointer table-row" @click.stop="showChildren[index] = !showChildren[index]">
                 <div class="cell">
                     <button
                         @click.stop="showChildren[index] = !showChildren[index]"
@@ -73,7 +73,7 @@ function addSubItem(id) {
                     <button class="button" @click.stop="updateItem()">
                         <mdicon name="pencil" width="20" height="20" />
                     </button>
-                    <button class="button" @click.stop="deleteItem()">
+                    <button class="button" @click.stop="deleteItem(item.id)">
                         <mdicon name="close-thick" width="20" height="20" />
                     </button>
                     <button class="button" @click.stop="addSubItem(item.id)">
@@ -96,6 +96,14 @@ function addSubItem(id) {
     </div>
 </template>
 <style scoped>
+.table-row {
+    border-bottom: 1px solid rgb(207, 207, 207);
+}
+
+.table-row:hover {
+    border-bottom: 1px solid rgb(90, 90, 90);
+}
+
 .children {
     padding-left: 20px;
 }

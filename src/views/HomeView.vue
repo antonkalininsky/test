@@ -24,14 +24,24 @@ const modal = ref()
                 <div class="cell">Действия</div>
             </div>
             <TableRow :data="data" :depth="0" />
+            <div v-show="data.length === 0" class="empty-msg">Данные не найдены</div>
         </div>
-        <button class="button my-a" style="display: block" @click.stop="modal.triggerModal('add', null)">
+        <button
+            class="button my-a"
+            style="display: block"
+            @click.stop="modal.triggerModal('add', null)"
+        >
             <mdicon name="plus-thick" width="20" height="20" />
         </button>
     </div>
 </template>
 
 <style scoped>
+.empty-msg {
+    font-weight: 600;
+    margin-inline: auto;
+}
+
 .main {
     width: 80vw;
     margin-inline: auto;
@@ -39,6 +49,7 @@ const modal = ref()
 
 .table {
     width: 100%;
+    margin-bottom: 10px;
 }
 
 .table th {
@@ -50,7 +61,16 @@ const modal = ref()
     color: white;
 }
 
+.table__header .cell {
+    border-left: 1px solid #fafafa;
+}
+
 .table__header th {
+    text-align: start;
+}
+
+.cell {
+    padding: 10px 20px;
     text-align: start;
 }
 </style>
