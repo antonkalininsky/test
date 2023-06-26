@@ -2,15 +2,24 @@
 import ModalBox from '../components/ModalBox.vue'
 import TableRow from '../components/TableRow.vue'
 import { useMainStore } from '../stores/main'
+import { useModalStore } from '../stores/modal'
 import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 // STORE
 const mainStore = useMainStore()
 const { data } = storeToRefs(mainStore)
+const modalStore = useModalStore()
+const { trigger } = storeToRefs(modalStore)
 
 // VARS
 const modal = ref()
+
+// WATCH
+
+watch(trigger, () => {
+    modal.value.triggerModal(modalStore.mode, modalStore.id)
+})
 </script>
 
 <template>
@@ -26,10 +35,7 @@ const modal = ref()
             <TableRow :data="data" :depth="0" />
             <div v-show="data.length === 0" class="empty-msg">Данные не найдены</div>
         </div>
-        <button
-            class="button button-new"
-            @click.stop="modal.triggerModal('add', null)"
-        >
+        <button class="button button-new" @click.stop="modal.triggerModal('add', null)">
             <mdicon name="plus-thick" width="20" height="20" />
         </button>
     </div>

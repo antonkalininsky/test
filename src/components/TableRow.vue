@@ -1,10 +1,12 @@
 <script setup>
-import ModalBox from './ModalBox.vue'
 import { ref, watch } from 'vue'
+import { useModalStore } from '../stores/modal'
+
+// STORE
+const modalStore = useModalStore()
 
 // VARS
 const showChildren = ref([])
-const modal = ref()
 
 // PROPS
 const props = defineProps(['data', 'depth'])
@@ -33,21 +35,14 @@ function calcChildrenValue(data) {
     return data.value + data.children.reduce((accum, curr) => accum + calcChildrenValue(curr), 0)
 }
 
-function updateItem(id) {
-    modal.value.triggerModal('update', id)
-}
-
-function deleteItem(id) {
-    modal.value.triggerModal('delete', id)
-}
-
-function addSubItem(id) {
-    modal.value.triggerModal('add', id)
+function triggerModal(mode, id) {
+    modalStore.id = id;
+    modalStore.mode = mode;
+    modalStore.trigger = !modalStore.trigger;
 }
 </script>
 <template>
     <div>
-        <ModalBox ref="modal" />
         <div v-for="(item, index) in props.data" :key="item.id">
             <div
                 class="grid-row pointer table-row"
@@ -77,13 +72,13 @@ function addSubItem(id) {
                 <div class="cell">{{ calcChildrenValue(item) }}</div>
                 <div class="cell">{{ item.value }}</div>
                 <div class="cell">
-                    <button class="button" @click.stop="updateItem(item.id)">
+                    <button class="button" @click.stop="triggerModal('update', item.id)">
                         <mdicon name="pencil" width="20" height="20" />
                     </button>
-                    <button class="button" @click.stop="deleteItem(item.id)">
+                    <button class="button" @click.stop="triggerModal('delete', item.id)">
                         <mdicon name="close-thick" width="20" height="20" />
                     </button>
-                    <button class="button" @click.stop="addSubItem(item.id)">
+                    <button class="button" @click.stop="triggerModal('add', item.id)">
                         <mdicon name="plus-thick" width="20" height="20" />
                     </button>
                 </div>
